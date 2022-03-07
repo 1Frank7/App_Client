@@ -39,5 +39,33 @@ namespace TestClientRestAPI
             {
                 usuarios = JsonConvert.DeserializeObject<List<usuarios>>(respuesta);
             }
+        }
+
+    }
+
+
+    public class usuarios
+    {
+        string Nombre;
+        string Apellido;
+        int Idusuario;
+
+        public string nombre { get => Nombre; set => Nombre = value; }
+        public string apellido { get => Apellido; set => Apellido = value; }
+        public int idusuarios { get => Idusuario; set => Idusuario = value; }
+    }
+
+    public class ubicacion
+    {
+        string Longitud;
+        string Latitud;
+        int Idusuario;
+        string Descripcion;
+
+        public string longitud { get => Longitud; set => Longitud = value; }
+        public string latitud { get => Latitud; set => Latitud = value; }
+        public int idusuario { get => Idusuario; set => Idusuario = value; }
+        public string descripcion { get => Descripcion; set => Descripcion = value; }
+    }
 
 }
