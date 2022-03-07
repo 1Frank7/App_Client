@@ -124,6 +124,63 @@ namespace App_Client
         }
 
 
+        /// <summary>
+        /// Metodo que sirve para realizar una consulta PUT a un RestApi
+        /// </summary>
+        /// <param name="url">La url del RestAPI a consumir</param>
+        /// <param name="data">La data que se envíara al RestAPI, puede ir vacio</param>
+        /// <param name="credenciales">Las credenciales de autorizacion="Basic " para utilizar el metodo</param>
+        /// <param name="autorization">El tipo de autorizacion="Basic " que se utilizara para consumir el RestAPI</param>
+        /// <returns>Retorna la respuesta del servidor, tal y como este la devuelve</returns>
+
+
+        public string PutAPI(string url, string data, string credenciales, string autorization)
+        {
+            string respuesta = "No se pudo realizar el metodo Put";
+            //var url = $"http://localhost:8080/items";
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            //string json = $"{{\"id\":\"{id}\",\"data\":\"{data}\"}}";
+            //byte[] byteArray = Encoding.UTF8.GetBytes(data);
+            request.Headers.Add("Authorization", autorization + credenciales);
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            request.Timeout = 900000;
+            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            try
+            {
+                using (WebResponse response = request.GetResponse())
+                {
+                    using (Stream strReader = response.GetResponseStream())
+                    {
+                        if (strReader == null) return respuesta;
+                        using (StreamReader objReader = new StreamReader(strReader))
+                        {
+                            string responseBody = objReader.ReadToEnd();
+                            // Do something with responseBody
+                            Console.WriteLine(responseBody);
+                            respuesta = responseBody;
+                            //respuesta = respuesta.Replace("[{", "{");
+                            //respuesta = respuesta.Replace("}]", "}");
+                            return respuesta;
+                        }
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                // Handle error
+                respuesta = "Se produjo una excepcion la cual es: " + ex;
+                Console.WriteLine(respuesta);
+                return respuesta;
+            }
+        }
+
 
 
 
