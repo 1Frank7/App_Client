@@ -65,6 +65,33 @@ namespace TestClientRestAPI
             {
                 usuario = JsonConvert.DeserializeObject<usuarios>(respuesta);
             }
+
+
+            //Guardar ubicaciones para el usuario creado
+
+            //Guardar primera ubicacion
+            ubicacion ubicaciones = new ubicacion();
+            ubicaciones.latitud = "-92.551968";
+            ubicaciones.longitud = "15.166495";
+            ubicaciones.idusuario = usuario.idusuarios;
+            ubicaciones.descripcion = "chiapas";
+
+            url = "http://127.0.0.1:8000/ubicaciones";
+            data = "";
+            respuesta = "";
+            data = JsonConvert.SerializeObject(ubicaciones);
+            respuesta = consumir.PostAPI(url, data, "", "");
+
+            //Guardar una segunda ubicacion
+            ubicaciones.descripcion = "Santa Lucia Cotz";
+            ubicaciones.latitud = "2.1244";
+            ubicaciones.longitud = "15.166495";
+            url = "http://127.0.0.1:8000/ubicaciones";
+            data = "";
+            respuesta = "";
+            data = JsonConvert.SerializeObject(ubicaciones);
+            respuesta = consumir.PostAPI(url, data, "", "");
+
         }
 
     }
