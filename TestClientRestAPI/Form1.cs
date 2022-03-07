@@ -39,6 +39,32 @@ namespace TestClientRestAPI
             {
                 usuarios = JsonConvert.DeserializeObject<List<usuarios>>(respuesta);
             }
+
+
+            usuarios usuario = new usuarios();
+            usuario = usuarios[0];
+            usuario.idusuarios = 7;
+            usuario.nombre = "Azucena";
+            usuario.apellido = "Grijalva";
+
+
+            //Guardar el nuevo usuario
+            respuesta = "";
+            string data = JsonConvert.SerializeObject(usuario);
+            respuesta = consumir.PostAPI(url, data, "", "");
+
+
+            //Impirmir el valor de respuesta
+            //Si retorna una lista vacia, es porque no existen usuarios
+            if (respuesta.Equals("{}"))
+            {
+                //Imprimir que no encontro ningun usuario
+            }
+            //Sí son varios objetos json
+            if ((respuesta.StartsWith("{") && respuesta.EndsWith("}")))
+            {
+                usuario = JsonConvert.DeserializeObject<usuarios>(respuesta);
+            }
         }
 
     }
