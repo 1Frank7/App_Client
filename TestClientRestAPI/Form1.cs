@@ -92,6 +92,25 @@ namespace TestClientRestAPI
             data = JsonConvert.SerializeObject(ubicaciones);
             respuesta = consumir.PostAPI(url, data, "", "");
 
+
+            List<ubicacion> ubicacionesusuario = new List<ubicacion>();
+            url = "http://127.0.0.1:8000/ubicaciones/" + usuario.idusuarios;
+            data = "";
+            respuesta = "";
+
+            respuesta = consumir.GetAPI(url, "", "");
+
+            //Si retorna una lista vacia, es porque no existen usuarios
+            if (respuesta.Equals("[]"))
+            {
+                //Imprimir que no encontro ningun usuario
+            }
+            //Sí son varios objetos json
+            if ((respuesta.StartsWith("[") && respuesta.EndsWith("]")))
+            {
+                ubicacionesusuario = JsonConvert.DeserializeObject<List<ubicacion>>(respuesta);
+
+            }
         }
 
     }
